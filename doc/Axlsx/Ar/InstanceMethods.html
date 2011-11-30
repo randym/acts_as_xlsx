@@ -80,8 +80,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Empty module - I really like ruports way of allowing :include, :only,
-:exclude  and am looking to add something like that in the next release</p>
+<p>Defines the instance methods we add to ActiveRecord::Base</p>
 
 
   </div>
@@ -160,17 +159,16 @@ allowed</p>
       <pre class="lines">
 
 
-84
-85
-86</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/axlsx/acts_as_xlsx.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/axlsx/acts_as_xlsx.rb', line 88</span>
 
-<span class='def def kw'>def</span> <span class='to_xlsx identifier id'>to_xlsx</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='to_xlsx identifier id'>to_xlsx</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id to_xlsx'>to_xlsx</span><span class='lparen'>(</span><span class='id options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id to_xlsx'>to_xlsx</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id id'>id</span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -181,9 +179,9 @@ allowed</p>
 </div>
     
     <div id="footer">
-  Generated on Wed Nov 30 09:06:47 2011 by 
+  Generated on Wed Nov 30 22:59:02 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.8.7).
+  0.7.3 (ruby-1.9.3).
 </div>
 
   </body>

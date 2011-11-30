@@ -7,7 +7,7 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.0a
+**Latest Version**: 1.0.0
 **Ruby Version**: 1.8.7 - 1.9.3  
 **Release Date**: November 30th 2011     
 
@@ -45,7 +45,7 @@ Usage
 
 ###Examples
 
-Rails 
+Basic Rails 
 
      #Add the gem to your Gemfile and bundle install
        gem 'acts_as_xlsx'
@@ -68,6 +68,9 @@ Rails
        end
 
      end
+
+Specify columns and methods and i18n chain
+	p = Post.to_xlsx :columns => [:name, :title, :ranking], :i18n => 'activerecord.attributes'
 
 ###Documentation
 

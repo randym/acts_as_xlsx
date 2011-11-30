@@ -1,5 +1,5 @@
 require 'rake'
-acts_as_xlsx_version = "1.0.0a"
+acts_as_xlsx_version = "1.0.0"
 Gem::Specification.new do |s|
   s.name        = 'acts_as_xlsx'
   s.version     =  acts_as_xlsx_version
@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'axlsx', '>= 1.0.10'
   s.add_runtime_dependency 'activerecord'
+  s.add_runtime_dependency 'i18n'
   s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'rake'
 
 end

@@ -154,9 +154,8 @@
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code"><span class='class class kw'>class</span> <span class='MyModel constant id'>MyModel</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
-   <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span> <span class='symbol val'>:exclude</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='symbol val'>:updated_at</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:i18n</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'activerecord.attributes'</span>
-</pre>
+      <pre class="example code">class MyModel &lt; ActiveRecord::Base
+   acts_as_xlsx :columns=&gt; [:id, :created_at, :updated_at], :i18n =&gt; 'activerecord.attributes'</pre>
     
   </div>
 <h3>Parameters:</h3>
@@ -189,24 +188,14 @@
     <ul class="option">
       
         <li>
-          <span class="name">exclude</span>
+          <span class="name">columns</span>
           <span class="type">(<tt>Array</tt>, <tt>Symbol</tt>)</span>
           <span class="default">
             
           </span>
           &mdash; <div class='inline'>
-<p>a list of columns to exclude from the report</p>
-</div>
-        </li>
-      
-        <li>
-          <span class="name">include</span>
-          <span class="type">(<tt>Array</tt>, <tt>Symbol</tt>)</span>
-          <span class="default">
-            
-          </span>
-          &mdash; <div class='inline'>
-<p>a list of associated models to include in the report</p>
+<p>an array of symbols defining the columns and methods to call in generating
+sheet data for each row.</p>
 </div>
         </li>
       
@@ -225,34 +214,6 @@ will be used to determine the labels for columns.</p>
 </div>
         </li>
       
-        <li>
-          <span class="name">attributes_only</span>
-          <span class="type">(<tt>Boolean</tt>)</span>
-          <span class="default">
-            
-              &mdash; default:
-              <tt>default false</tt>
-            
-          </span>
-          &mdash; <div class='inline'>
-<p>By default, acts_as_xlsx will use methods on your model over attributes
-with the same name. If you want to restrict the behavior to only using
-active record instance attributes when generating xlsx set this to true</p>
-</div>
-        </li>
-      
-        <li>
-          <span class="name">A</span>
-          <span class="type">(<tt>Array</tt>, <tt>Symbol</tt>)</span>
-          <span class="default">
-            
-          </span>
-          &mdash; <div class='inline'>
-<p>list of method names that will be called. the name of the method will be
-the column. The return value will be applied for each row.</p>
-</div>
-        </li>
-      
     </ul>
   
 
@@ -263,23 +224,24 @@ the column. The return value will be applied for each row.</p>
       <pre class="lines">
 
 
+27
+28
+29
 30
 31
 32
-33
-34
-35</pre>
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/axlsx/acts_as_xlsx.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/axlsx/acts_as_xlsx.rb', line 27</span>
 
-<span class='def def kw'>def</span> <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:xlsx_options</span><span class='comma token'>,</span> <span class='symbol val'>:xlsx_columns</span><span class='comma token'>,</span> <span class='symbol val'>:xlsx_labels</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='xlsx_options identifier id'>xlsx_options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
-  <span class='include identifier id'>include</span> <span class='Axlsx constant id'>Axlsx</span><span class='colon2 op'>::</span><span class='Ar constant id'>Ar</span><span class='colon2 op'>::</span><span class='InstanceMethods constant id'>InstanceMethods</span>        
-  <span class='extend identifier id'>extend</span> <span class='Axlsx constant id'>Axlsx</span><span class='colon2 op'>::</span><span class='Ar constant id'>Ar</span><span class='colon2 op'>::</span><span class='SingletonMethods constant id'>SingletonMethods</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id acts_as_xlsx'>acts_as_xlsx</span><span class='lparen'>(</span><span class='id options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id cattr_accessor'>cattr_accessor</span> <span class='symbol'>:xlsx_i18n</span><span class='comma'>,</span> <span class='symbol'>:xlsx_columns</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id xlsx_i18n'>xlsx_i18n</span> <span class='op'>=</span> <span class='id options'>options</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:i18n</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id xlsx_columns'>xlsx_columns</span> <span class='op'>=</span> <span class='id options'>options</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:columns</span><span class='rparen'>)</span> <span class='op'>||</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id column_names'>column_names</span><span class='period'>.</span><span class='id map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span> <span class='id c'>c</span> <span class='op'>=</span> <span class='id c'>c</span><span class='period'>.</span><span class='id to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='id include'>include</span> <span class='const'>Axlsx</span><span class='op'>::</span><span class='const'>Ar</span><span class='op'>::</span><span class='const'>InstanceMethods</span>        
+  <span class='id extend'>extend</span> <span class='const'>Axlsx</span><span class='op'>::</span><span class='const'>Ar</span><span class='op'>::</span><span class='const'>SingletonMethods</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -290,9 +252,9 @@ the column. The return value will be applied for each row.</p>
 </div>
     
     <div id="footer">
-  Generated on Wed Nov 30 09:06:47 2011 by 
+  Generated on Wed Nov 30 22:59:02 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.8.7).
+  0.7.3 (ruby-1.9.3).
 </div>
 
   </body>
