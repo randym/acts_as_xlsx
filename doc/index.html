@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  File: README
+  
+    &mdash; Acts As Xlsx (Axlsx)
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>Axlsx: Office Open XML Spreadsheet Generation</h1>
+
+<p><strong>IRC</strong>:          <a href="irc://irc.freenode.net/axlsx">irc.freenode.net / #axlsx</a>  <br/>
+<strong>Git</strong>:          <a href="http://github.com/randym/acts_as_xlsx">http://github.com/randym/acts_as_xlsx</a> <br/>
+<strong>Author</strong>:       Randy Morgan <br/>
+<strong>Copyright</strong>:    2011    <br/>
+<strong>License</strong>:      MIT License    <br/>
+<strong>Latest Version</strong>: 1.0.0a
+<strong>Ruby Version</strong>: 1.8.7 - 1.9.3 <br/>
+<strong>Release Date</strong>: November 30th 2011</p>
+
+<h2>Synopsis</h2>
+
+<p>Acts_as_xlsx is an active record plugin for Axlsx. It makes generating excel spreadsheets from any subclass of ActiveRecord::Base as simple as a couple of lines of code.</p>
+
+<h2>Feature List</h2>
+
+<p>**1. Mixes into active record base to provide to_xlsx methods on both class and instance active record inheritors.</p>
+
+<p>**2. Can work at the end of any series of finder methods.</p>
+
+<p>**3. Can accept any set of find options</p>
+
+<p>**4. Automates localization of column heading with i18n support</p>
+
+<p>**5. Lets you specify columns to exclude from the report.</p>
+
+<p>**6. Gives you access to the axlsx package so you can add styles, charts and pictures to satisfy those flashy sales guys.</p>
+
+<p>**7. Plays nicely with both ruby 1.8.7 + rails 2.3 as well as ruby 1.9.3 + rails 3</p>
+
+<h2>Installing</h2>
+
+<p>To install, use the following command:</p>
+
+<pre class="code">$ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span>
+</pre>
+
+<h2>Usage</h2>
+
+<h3>Examples</h3>
+
+<p>Rails</p>
+
+<pre class="code"> <span class='comment val'>#Add the gem to your Gemfile and bundle install</span>
+   <span class='gem identifier id'>gem</span> <span class='string val'>'acts_as_xlsx'</span>
+
+ <span class='comment val'># app/models/post.rb</span>
+ <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+
+   <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span>
+
+ <span class='end end kw'>end</span>
+
+ <span class='comment val'># app/controllers/posts_controller.rb</span>
+ <span class='class class kw'>class</span> <span class='PostsController constant id'>PostsController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+
+   <span class='comment val'># GET posts/xlsx     </span>
+   <span class='def def kw'>def</span> <span class='xlsx identifier id'>xlsx</span>
+     <span class='p identifier id'>p</span> <span class='assign token'>=</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='to_xlsx identifier id'>to_xlsx</span>
+     <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='string val'>'public/downloads/posts.xlsx'</span><span class='rparen token'>)</span>
+     <span class='send_file identifier id'>send_file</span> <span class='string val'>'public/downloads/posts.xlsx'</span><span class='comma token'>,</span> <span class='symbol val'>:type=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;application/xlsx&quot;</span>
+   <span class='end end kw'>end</span>
+
+ <span class='end end kw'>end</span>
+</pre>
+
+<h3>Documentation</h3>
+
+<p>This gem is 100% documented with YARD, an exceptional documentation library. To see documentation for this, and all the gems installed on your system use:</p>
+
+<pre class="code">  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='yard identifier id'>yard</span>
+  <span class='yard identifier id'>yard</span> <span class='server identifier id'>server</span> <span class='minus op'>-</span><span class='g identifier id'>g</span>
+</pre>
+
+<h3>Specs</h3>
+
+<p>Specs for this gem are still under development.</p>
+
+<h2>Changelog</h2>
+
+<ul>
+<li><strong>October.30.11</strong>: 1.0.0a release
+
+<ul>
+<li>First pre release</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Please see the <a href="file.CHANGELOG.html" title="CHANGELOG">CHANGELOG</a> document for past release information.</p>
+
+<h2>Copyright</h2>
+
+<p>Acts_as_xlsx &copy; 2011 by <a href="mailto:digial.ipseity@gmail.com">Randy Morgan</a>. Acts_as_xlsx is
+licensed under the MIT license. Please see the <a href="file.LICENSE.html" title="LICENSE">LICENSE</a> document for more information.</p>
+</div></div>
+    
+    <div id="footer">
+  Generated on Wed Nov 30 09:06:47 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.3 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>
