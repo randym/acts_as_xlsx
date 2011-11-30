@@ -1,5 +1,6 @@
-Axlsx: Office Open XML Spreadsheet Generation
+Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 ====================================
+[![Build Status](https://secure.travis-ci.org/randym/acts_as_xlsx.png)](http://travis-ci.org/randym/acts_as_xlsx/)
 
 **IRC**:          [irc.freenode.net / #axlsx](irc://irc.freenode.net/axlsx)    
 **Git**:          [http://github.com/randym/acts_as_xlsx](http://github.com/randym/acts_as_xlsx)   
