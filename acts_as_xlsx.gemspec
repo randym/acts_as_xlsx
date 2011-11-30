@@ -26,7 +26,12 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'axlsx', '>= 1.0.10'
   s.add_runtime_dependency 'activerecord', '>= 2.3.9'
   s.add_runtime_dependency 'i18n', '>=0.6.0'
+
+  # required for yard documentation generation
   s.add_runtime_dependency 'yard'
+  s.add_runtime_dependency 'rdiscount'
+  
+  # required for running tests
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rake', '>= 0.9.2'
 
