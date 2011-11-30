@@ -29,7 +29,12 @@ module Axlsx
       #          acts_as_xlsx :exclude => [:id, :created_at, :updated_at], :i18n => 'activerecord.attributes'
       def acts_as_xlsx(options={})
         cattr_accessor :xlsx_options, :xlsx_columns, :xlsx_labels
-        self.xlsx_options = options
+        self.xlsx_options = {}
+        self.xlsx_options[:reject] = options.delete(:reject) || []
+        self.xlsx_options[:includes] = options.delete(:includes) || []
+        self.xlsx_options[:methods] = options.delete(:methods) || []
+        self.xlsx_options.each { |k, o| self.xlsx_options[k] = [o] unless o.is_a?(Array) }
+
         include Axlsx::Ar::InstanceMethods        
         extend Axlsx::Ar::SingletonMethods
       end
@@ -50,8 +55,13 @@ module Axlsx
         row_style = options.delete(:style)
         header_style = options.delete(:header_style) || row_style
         types = options.delete(:types)
-        xlsx_options[:reject] << options.delete(:reject) unless options[:reject].nil?
-        
+
+        xlsx_options.each do |key, option|
+          val = options.delete(key) || []
+          val = [val] unless val.is_a?(Array)
+          option.concat val
+          option.uniq!
+        end
 
         p = Package.new
         row_style = p.workbook.styles.add_style(row_style) unless row_style.nil?
@@ -60,14 +70,16 @@ module Axlsx
         data = [*find(number, options)]
         data.compact!
         data.flatten!
+
         return p if data.empty?
-        @xlsx_columns = data.first.attributes.keys - @xlsx_reject.map { |r| r = r.to_s }
+        xlsx_columns = data.first.attributes.keys
+        xlsx_columns -= xlsx_options[:reject].map { |r| r = r.to_s } unless xlsx_options[:reject].empty?
         p.workbook.add_worksheet(:name=>table_name.humanize) do |sheet|
-          col_labels = @i18n == false ? @xlsx_columns : @xlsx_columns.map { |c| I18n.t("#{@i18n}.#{self.name.underscore}.#{c}") }
+          col_labels = @i18n == false ? xlsx_columns : xlsx_columns.map { |c| I18n.t("#{@i18n}.#{self.name.underscore}.#{c}") }
           
           sheet.add_row col_labels, :style=>header_style
           data.each do |r|
-            row_data = @xlsx_columns.map { |c| r.attributes[c] }
+            row_data = xlsx_columns.map { |c| r.attributes[c] }
             sheet.add_row row_data, :style=>row_style, :types=>types
           end
         end

@@ -25,4 +25,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'axlsx', '>= 1.0.10'
   s.add_runtime_dependency 'activerecord'
+  s.add_development_dependency 'sqlite3'
+
 end
