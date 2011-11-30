@@ -72,18 +72,18 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/acts_as_xlsx/acts_as_xlsx.rb</dd>
+    <dd class="r1 last">lib/acts_as_xlsx.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<h3>Overview</h3>
-
-<p>This module defines the acts_as_xlsx class method and provides to_xlsx
-support to both AR classes and instances</p>
+    <h3>Overview</h3>
+<p>
+This module defines the acts_as_xlsx class method and provides to_xlsx
+support to both AR classes and instances
+</p>
 
 
   </div>
@@ -130,8 +130,9 @@ support to both AR classes and instances</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>:nodoc:.</p>
+    <span class="summary_desc"><div class='inline'><p>
+:nodoc:.
+</p>
 </div></span>
   
 </li>
@@ -155,8 +156,9 @@ support to both AR classes and instances</p>
   
 </p><div class="docstring">
   <div class="discussion">
-    
-<p>:nodoc:</p>
+    <p>
+:nodoc:
+</p>
 
 
   </div>
@@ -175,11 +177,12 @@ support to both AR classes and instances</p>
 16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_xlsx/acts_as_xlsx.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_xlsx.rb', line 14</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id included'>included</span><span class='lparen'>(</span><span class='id base'>base</span><span class='rparen'>)</span> <span class='comment'># :nodoc:
-</span>  <span class='id base'>base</span><span class='period'>.</span><span class='id send'>send</span> <span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ClassMethods</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='ClassMethods constant id'>ClassMethods</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -190,9 +193,9 @@ support to both AR classes and instances</p>
 </div>
     
     <div id="footer">
-  Generated on Thu Dec  1 00:37:19 2011 by 
+  Generated on Thu Dec  1 01:04:19 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.9.3).
+  0.7.3 (ruby-1.8.7).
 </div>
 
   </body>

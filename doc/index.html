@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
   File: README
   
@@ -63,9 +63,9 @@
 <strong>Author</strong>:       Randy Morgan <br/>
 <strong>Copyright</strong>:    2011    <br/>
 <strong>License</strong>:      MIT License    <br/>
-<strong>Latest Version</strong>: 1.0.0    <br/>
+<strong>Latest Version</strong>: 1.0.1    <br/>
 <strong>Ruby Version</strong>: 1.8.7 - 1.9.3<br/>
-<strong>Release Date</strong>: November 30th 2011</p>
+<strong>Release Date</strong>: December 1st 2011</p>
 
 <h2>Synopsis</h2>
 
@@ -81,7 +81,7 @@
 
 <p>**4. Automates localization of column heading with i18n support</p>
 
-<p>**5. Lets you specify columns to exclude from the report.</p>
+<p>**5. Lets you specify columns the precise columns and/or methods you want to call to populate your table in one go.</p>
 
 <p>**6. Gives you access to the axlsx package so you can add styles, charts and pictures to satisfy those flashy sales guys.</p>
 
@@ -91,7 +91,7 @@
 
 <p>To install, use the following command:</p>
 
-<pre class="code">$ gem install acts_as_xlsx
+<pre class="code">$ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span>
 </pre>
 
 <h2>Usage</h2>
@@ -100,36 +100,41 @@
 
 <p>A trivial rails example</p>
 
-<pre class="code"> <span class='comment'>#Add the gem to your Gemfile and bundle install
-</span>   <span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>acts_as_xlsx</span><span class='tstring_end'>'</span></span>
+<pre class="code"> <span class='comment val'>#Add the gem to your Gemfile and bundle install</span>
+   <span class='gem identifier id'>gem</span> <span class='string val'>'acts_as_xlsx'</span>
 
- <span class='comment'># app/models/post.rb
-</span>   <span class='kw'>class</span> <span class='const'>Post</span> <span class='op'>&lt;</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span>
-     <span class='id acts_as_xlsx'>acts_as_xlsx</span>
-   <span class='kw'>end</span>
+ <span class='comment val'># app/models/post.rb</span>
+   <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+     <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span>
+   <span class='end end kw'>end</span>
 
- <span class='comment'># app/controllers/posts_controller.rb
-</span>   <span class='kw'>class</span> <span class='const'>PostsController</span> <span class='op'>&lt;</span> <span class='const'>ApplicationController</span>
-     <span class='comment'># GET posts/xlsx     
-</span>     <span class='kw'>def</span> <span class='id xlsx'>xlsx</span>
-       <span class='id p'>p</span> <span class='op'>=</span> <span class='const'>Post</span><span class='period'>.</span><span class='id to_xlsx'>to_xlsx</span>
-       <span class='id p'>p</span><span class='period'>.</span><span class='id serialize'>serialize</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>public/downloads/posts.xlsx</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-       <span class='id send_file'>send_file</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>public/downloads/posts.xlsx</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:type</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/xlsx</span><span class='tstring_end'>&quot;</span></span>
-     <span class='kw'>end</span>
-   <span class='kw'>end</span>
+ <span class='comment val'># app/controllers/posts_controller.rb</span>
+   <span class='class class kw'>class</span> <span class='PostsController constant id'>PostsController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+     <span class='comment val'># GET posts/xlsx     </span>
+     <span class='def def kw'>def</span> <span class='xlsx identifier id'>xlsx</span>
+       <span class='p identifier id'>p</span> <span class='assign token'>=</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='to_xlsx identifier id'>to_xlsx</span>
+       <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='string val'>'public/downloads/posts.xlsx'</span><span class='rparen token'>)</span>
+       <span class='send_file identifier id'>send_file</span> <span class='string val'>'public/downloads/posts.xlsx'</span><span class='comma token'>,</span> <span class='symbol val'>:type=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;application/xlsx&quot;</span>
+     <span class='end end kw'>end</span>
+   <span class='end end kw'>end</span>
 </pre>
 
 <p>Specify columns and methods and i18n chain</p>
 
-<pre class="code"><span class='id p'>p</span> <span class='op'>=</span> <span class='const'>Post</span><span class='period'>.</span><span class='id to_xlsx'>to_xlsx</span> <span class='symbol'>:columns</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:title</span><span class='comma'>,</span> <span class='symbol'>:ranking</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='symbol'>:i18n</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>activerecord.attributes</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='p identifier id'>p</span> <span class='assign token'>=</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='to_xlsx identifier id'>to_xlsx</span> <span class='symbol val'>:columns</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='symbol val'>:ranking</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:i18n</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'activerecord.attributes'</span>
+</pre>
+
+<p>For examples on how to use axlsx for custom styles, charts, images and more see:</p>
+
+<pre class="code">    <span class='lbrack token'>[</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/rubygems.org/</span><span class='gems identifier id'>gems</span><span class='div op'>/</span><span class='axlsx identifier id'>axlsx</span><span class='rbrack token'>]</span> <span class='lparen token'>(</span><span class='https identifier id'>https</span><span class='symbol val'>:/</span><span class='regexp val'>/rubygems.org/</span><span class='gems identifier id'>gems</span><span class='div op'>/</span><span class='axlsx identifier id'>axlsx</span><span class='rparen token'>)</span>
 </pre>
 
 <h3>Documentation</h3>
 
 <p>This gem is 100% documented with YARD, an exceptional documentation library. To see documentation for this, and all the gems installed on your system use:</p>
 
-<pre class="code">  <span class='id gem'>gem</span> <span class='id install'>install</span> <span class='id yard'>yard</span>
-  <span class='id yard'>yard</span> <span class='id server'>server</span> <span class='op'>-</span><span class='id g'>g</span>
+<pre class="code">  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='yard identifier id'>yard</span>
+  <span class='yard identifier id'>yard</span> <span class='server identifier id'>server</span> <span class='minus op'>-</span><span class='g identifier id'>g</span>
 </pre>
 
 <h3>Specs</h3>
@@ -139,7 +144,19 @@
 <h2>Changelog</h2>
 
 <ul>
-<li><strong>October.30.11</strong>: 1.0.0a release
+<li><p><strong>October.30.11</strong>: 1.0.1 release</p>
+
+<ul>
+<li>Patch for inclusion error</li>
+</ul>
+</li>
+<li><p><strong>October.30.11</strong>: 1.0.0 release</p>
+
+<ul>
+<li>First release</li>
+</ul>
+</li>
+<li><p><strong>October.30.11</strong>: 1.0.0a release</p>
 
 <ul>
 <li>First pre release</li>
@@ -157,9 +174,9 @@ licensed under the MIT license. Please see the <a href="file.LICENSE.html" title
 </div></div>
     
     <div id="footer">
-  Generated on Thu Dec  1 00:37:19 2011 by 
+  Generated on Thu Dec  1 01:04:19 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.9.3).
+  0.7.3 (ruby-1.8.7).
 </div>
 
   </body>

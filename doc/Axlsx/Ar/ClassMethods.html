@@ -72,15 +72,16 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/acts_as_xlsx/acts_as_xlsx.rb</dd>
+    <dd class="r1 last">lib/acts_as_xlsx.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Class methods for the mixin</p>
+    <p>
+Class methods for the mixin
+</p>
 
 
   </div>
@@ -117,8 +118,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>defines the class method to inject to_xlsx.</p>
+    <span class="summary_desc"><div class='inline'><p>
+defines the class method to inject to_xlsx.
+</p>
 </div></span>
   
 </li>
@@ -142,8 +144,9 @@
   
 </p><div class="docstring">
   <div class="discussion">
-    
-<p>defines the class method to inject to_xlsx</p>
+    <p>
+defines the class method to inject to_xlsx
+</p>
 
 
   </div>
@@ -154,8 +157,9 @@
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code">class MyModel &lt; ActiveRecord::Base
-   acts_as_xlsx :columns=&gt; [:id, :created_at, :updated_at], :i18n =&gt; 'activerecord.attributes'</pre>
+      <pre class="example code"><span class='class class kw'>class</span> <span class='MyModel constant id'>MyModel</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+   <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span> <span class='symbol val'>:columns=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='symbol val'>:updated_at</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:i18n</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'activerecord.attributes'</span>
+</pre>
     
   </div>
 <h3>Parameters:</h3>
@@ -173,8 +177,9 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>a customizable set of options</p>
+        <div class='inline'><p>
+a customizable set of options
+</p>
 </div>
       
     </li>
@@ -193,9 +198,10 @@
           <span class="default">
             
           </span>
-          &mdash; <div class='inline'>
-<p>an array of symbols defining the columns and methods to call in generating
-sheet data for each row.</p>
+          &mdash; <div class='inline'><p>
+an array of symbols defining the columns and methods to call in generating
+sheet data for each row.
+</p>
 </div>
         </li>
       
@@ -208,9 +214,10 @@ sheet data for each row.</p>
               <tt>default nil</tt>
             
           </span>
-          &mdash; <div class='inline'>
-<p>The path to search for localization. When this is specified your i18n.t
-will be used to determine the labels for columns.</p>
+          &mdash; <div class='inline'><p>
+The path to search for localization. When this is specified your i18n.t
+will be used to determine the labels for columns.
+</p>
 </div>
         </li>
       
@@ -232,14 +239,15 @@ will be used to determine the labels for columns.</p>
 32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_xlsx/acts_as_xlsx.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_xlsx.rb', line 27</span>
 
-<span class='kw'>def</span> <span class='id acts_as_xlsx'>acts_as_xlsx</span><span class='lparen'>(</span><span class='id options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id cattr_accessor'>cattr_accessor</span> <span class='symbol'>:xlsx_i18n</span><span class='comma'>,</span> <span class='symbol'>:xlsx_columns</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id xlsx_i18n'>xlsx_i18n</span> <span class='op'>=</span> <span class='id options'>options</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:i18n</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='kw'>false</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id xlsx_columns'>xlsx_columns</span> <span class='op'>=</span> <span class='id options'>options</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:columns</span><span class='rparen'>)</span> <span class='op'>||</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id column_names'>column_names</span><span class='period'>.</span><span class='id map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span> <span class='id c'>c</span> <span class='op'>=</span> <span class='id c'>c</span><span class='period'>.</span><span class='id to_sym'>to_sym</span> <span class='rbrace'>}</span>
-  <span class='id extend'>extend</span> <span class='const'>Axlsx</span><span class='op'>::</span><span class='const'>Ar</span><span class='op'>::</span><span class='const'>SingletonMethods</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='acts_as_xlsx identifier id'>acts_as_xlsx</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:xlsx_i18n</span><span class='comma token'>,</span> <span class='symbol val'>:xlsx_columns</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='xlsx_i18n identifier id'>xlsx_i18n</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:i18n</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='false false kw'>false</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='xlsx_columns identifier id'>xlsx_columns</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:columns</span><span class='rparen token'>)</span> <span class='orop op'>||</span>  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='column_names identifier id'>column_names</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='c identifier id'>c</span> <span class='assign token'>=</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='rbrace token'>}</span>
+  <span class='extend identifier id'>extend</span> <span class='Axlsx constant id'>Axlsx</span><span class='colon2 op'>::</span><span class='Ar constant id'>Ar</span><span class='colon2 op'>::</span><span class='SingletonMethods constant id'>SingletonMethods</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -250,9 +258,9 @@ will be used to determine the labels for columns.</p>
 </div>
     
     <div id="footer">
-  Generated on Thu Dec  1 00:37:19 2011 by 
+  Generated on Thu Dec  1 01:04:19 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.9.3).
+  0.7.3 (ruby-1.8.7).
 </div>
 
   </body>

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby -w
 require 'test/unit'
-require "axlsx/acts_as_xlsx"
+require "acts_as_xlsx.rb"
 require 'active_record'
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'helper'))

@@ -7,9 +7,9 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.0 	   
+**Latest Version**: 1.0.1 	   
 **Ruby Version**: 1.8.7 - 1.9.3  
-**Release Date**: November 30th 2011     
+**Release Date**: December 1st 2011     
 
 Synopsis
 --------
@@ -27,7 +27,7 @@ Feature List
 
 **4. Automates localization of column heading with i18n support
 
-**5. Lets you specify columns to exclude from the report.
+**5. Lets you specify columns the precise columns and/or methods you want to call to populate your table in one go.
 
 **6. Gives you access to the axlsx package so you can add styles, charts and pictures to satisfy those flashy sales guys.
 
@@ -68,6 +68,9 @@ A trivial rails example
 Specify columns and methods and i18n chain
 	p = Post.to_xlsx :columns => [:name, :title, :ranking], :i18n => 'activerecord.attributes'
 
+For examples on how to use axlsx for custom styles, charts, images and more see:
+        [http://rubygems.org/gems/axlsx] (https://rubygems.org/gems/axlsx)
+
 ###Documentation
 
 This gem is 100% documented with YARD, an exceptional documentation library. To see documentation for this, and all the gems installed on your system use:
@@ -82,6 +85,12 @@ This gem has 100% coverage using Test::Unit
  
 Changelog
 ---------
+- **October.30.11**: 1.0.1 release
+  - Patch for inclusion error
+
+- **October.30.11**: 1.0.0 release
+  - First release
+
 - **October.30.11**: 1.0.0a release
   - First pre release
  
