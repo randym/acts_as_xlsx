@@ -91,7 +91,6 @@ module Axlsx
 
 end
 
-begin
 
 require 'active_record'
 ActiveRecord::Base.send :include, Axlsx::Ar
