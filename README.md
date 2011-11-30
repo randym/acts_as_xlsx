@@ -7,7 +7,7 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.0
+**Latest Version**: 1.0.0 	   
 **Ruby Version**: 1.8.7 - 1.9.3  
 **Release Date**: November 30th 2011     
 
@@ -45,29 +45,25 @@ Usage
 
 ###Examples
 
-Basic Rails 
+A trivial rails example
 
      #Add the gem to your Gemfile and bundle install
        gem 'acts_as_xlsx'
-
+      
      # app/models/post.rb
-     class Post < ActiveRecord::Base
-     
-       acts_as_xlsx
-
-     end
-
-     # app/controllers/posts_controller.rb
-     class PostsController < ApplicationController
-
-       # GET posts/xlsx     
-       def xlsx
-         p = Post.to_xlsx
-         p.serialize('public/downloads/posts.xlsx')
-         send_file 'public/downloads/posts.xlsx', :type=>"application/xlsx"
+       class Post < ActiveRecord::Base
+         acts_as_xlsx
        end
 
-     end
+     # app/controllers/posts_controller.rb
+       class PostsController < ApplicationController
+         # GET posts/xlsx     
+         def xlsx
+           p = Post.to_xlsx
+           p.serialize('public/downloads/posts.xlsx')
+           send_file 'public/downloads/posts.xlsx', :type=>"application/xlsx"
+         end
+       end
 
 Specify columns and methods and i18n chain
 	p = Post.to_xlsx :columns => [:name, :title, :ranking], :i18n => 'activerecord.attributes'
@@ -82,7 +78,7 @@ This gem is 100% documented with YARD, an exceptional documentation library. To 
 
 ###Specs
 
-Specs for this gem are still under development.
+This gem has 100% coverage using Test::Unit
  
 Changelog
 ---------

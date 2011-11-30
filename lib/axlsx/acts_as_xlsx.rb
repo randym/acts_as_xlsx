@@ -28,7 +28,6 @@ module Axlsx
         cattr_accessor :xlsx_i18n, :xlsx_columns
         self.xlsx_i18n = options.delete(:i18n) || false
         self.xlsx_columns = options.delete(:columns) ||  self.column_names.map { |c| c = c.to_sym }
-        include Axlsx::Ar::InstanceMethods        
         extend Axlsx::Ar::SingletonMethods
       end
     end
@@ -79,19 +78,8 @@ module Axlsx
         p
       end
     end
-      
-      # Defines the instance methods we add to ActiveRecord::Base
-    module InstanceMethods
-      
-      # Allows a single instance to be exported
-      # All active record find options are allowed
-      def to_xlsx(options={})
-        self.class.to_xlsx(self.id, options)
-      end
-    end
   end
 end
-
 
 require 'active_record'
 ActiveRecord::Base.send :include, Axlsx::Ar

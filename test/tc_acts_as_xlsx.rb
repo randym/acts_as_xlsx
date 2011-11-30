@@ -22,7 +22,6 @@ class TestToXlsx < Test::Unit::TestCase
 
   def test_xlsx_columns
     assert_equal( Post.xlsx_columns, Post.column_names.map {|c| c.to_sym})
-
   end
 
   def test_to_xslx_vanilla
@@ -45,7 +44,6 @@ class TestToXlsx < Test::Unit::TestCase
     assert_equal("Name", sheet.rows.first.cells.first.value)
     assert_equal(Post.last.ranking, sheet.rows.last.cells.last.value)
   end
-
 end
 
 
