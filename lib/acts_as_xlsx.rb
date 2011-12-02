@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Axlsx is a gem or generating excel spreadsheets with charts, images and many other features. 
 # 
 # acts_as_xlsx provides integration into active_record for Axlsx.
@@ -72,7 +73,14 @@ module Axlsx
           sheet.add_row col_labels, :style=>header_style
           
           data.each do |r|
-            sheet.add_row columns.map { |c| r.send(c) }, :style=>row_style, :types=>types
+            row_data = columns.map do |c|
+              if c.to_s =~ /\./
+                v = r; c.to_s.split('.').each { |method| v = v.send(method) }; v
+              else
+                r.send(c)                
+              end
+            end
+            sheet.add_row row_data, :style=>row_style, :types=>types
           end
         end
         p
