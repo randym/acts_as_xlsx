@@ -1,4 +1,7 @@
 --protected
 --no-private
---title "Acts As Xlsx (Axlsx)"
---files LICENSE
+--main README.md
+--title "acts_as_xlsx: a rails plug in for axlsx"
+-
+LICENSE
+CHANGELOG.md

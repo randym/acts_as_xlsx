@@ -1,0 +1,5 @@
+module Axlsx
+  module Ar
+   VERSION = "1.0.2"
+ end
+end

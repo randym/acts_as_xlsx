@@ -19,7 +19,7 @@ Acts_as_xlsx is an active record plugin for Axlsx. It makes generating excel spr
 Feature List
 ------------
                                                                               
-**1. Mixes into active record base to provide to_xlsx methods on both class and instance active record inheritors.
+**1. Mixes into active record base to provide to_xlsx
 
 **2. Can work at the end of any series of finder methods.
                                                          
@@ -27,7 +27,7 @@ Feature List
 
 **4. Automates localization of column heading with i18n support
 
-**5. Lets you specify columns the precise columns and/or methods you want to call to populate your table in one go.
+**5. Lets you specify columns and methods chains you want to call to populate your table in one go.
 
 **6. Gives you access to the axlsx package so you can add styles, charts and pictures to satisfy those flashy sales guys.
 

@@ -1,8 +1,9 @@
 require 'rake'
-acts_as_xlsx_version = "1.0.2"
+require File.expand_path(File.dirname(__FILE__) + '/lib/acts_as_xlsx/version.rb')
+
 Gem::Specification.new do |s|
   s.name        = 'acts_as_xlsx'
-  s.version     =  acts_as_xlsx_version
+  s.version     =  Axlsx::Ar::VERSION
   s.author	= "Randy Morgan"
   s.email       = 'digital.ipseity@gmail.com'
   s.homepage 	= 'https://github.com/randym/acts_as_xlsx'
@@ -15,7 +16,7 @@ Gem::Specification.new do |s|
   eof
   # s.files 	= Dir.glob("{doc,lib,test,schema,examples}/**/*") + %w{ LICENSE README.md Rakefile CHANGELOG.md }
 
-  s.files = FileList.new('*', 'lib/**/*', 'doc/**/*', 'test/**/*', 'examples/**/*') do |fl|
+  s.files = FileList.new('*', 'lib/**/*', 'doc/**/*', 'examples/**/*') do |fl|
     fl.exclude("*.*~")
     fl.exclude(".*")
     fl.exclude("todo")
@@ -23,12 +24,20 @@ Gem::Specification.new do |s|
     fl.exclude("*.xlsx")
   end
 
+  s.test_files = FileList.new('test/**/*') do |fl|
+      fl.exclude("*.*~")
+      fl.exclude("*.db")
+  end	       
+
   s.add_runtime_dependency 'axlsx', '>= 1.0.10'
   s.add_runtime_dependency 'activerecord', '>= 2.3.9'
-  s.add_runtime_dependency 'i18n', '>=0.6.0'
  
   # required for running tests
+  s.add_development_dependency 'rake', "0.8.7" if RUBY_VERSION == "1.9.2"
+  s.add_development_dependency 'rake', "0.9.2.2" if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
+  s.add_development_dependency 'bundler'
   s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'rake', '>= 0.9.2'
+  s.add_development_dependency 'yard'
+  s.add_development_dependency 'rdiscount'
 
 end
