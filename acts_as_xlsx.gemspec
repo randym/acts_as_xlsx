@@ -1,5 +1,5 @@
 require 'rake'
-acts_as_xlsx_version = "1.0.1"
+acts_as_xlsx_version = "1.0.2"
 Gem::Specification.new do |s|
   s.name        = 'acts_as_xlsx'
   s.version     =  acts_as_xlsx_version

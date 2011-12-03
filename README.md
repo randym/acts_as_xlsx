@@ -7,9 +7,9 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.1 	   
+**Latest Version**: 1.0.2 	   
 **Ruby Version**: 1.8.7 - 1.9.3  
-**Release Date**: December 1st 2011     
+**Release Date**: December 3rd 2011     
 
 Synopsis
 --------
@@ -45,7 +45,11 @@ Usage
 
 ###Examples
 
-A trivial rails example
+A trivial rails example. In a production environment you will want to you stuff like x_sendfile and Tempfile  
+http://www.therailsway.com/2009/2/22/file-downloads-done-right  
+
+for nginx  
+http://andrewtimberlake.com/blog/how-to-protect-downloads-but-still-have-nginx-serve-the-files   
 
      #Add the gem to your Gemfile and bundle install
        gem 'acts_as_xlsx'
@@ -65,10 +69,27 @@ A trivial rails example
          end
        end
 
-Specify columns and methods and i18n chain
-	p = Post.to_xlsx :columns => [:name, :title, :ranking], :i18n => 'activerecord.attributes'
+     # dont forget to add posts/xslx to your routes!
 
+In addition to dumping the entire table, it is also possible to specify the columns and method chains to execute in genrating your report.
+       # GET posts/xslx
+       def xlsx	    
+         p = Post.to_xlsx :columns => [:name, :title, :ranking, :'comments.last.content', :'comments.last.author.name']
+         p.serialize('public/downloads/posts.xlsx')
+         send_file 'public/downloads/posts.xlsx', :type=>"application/xlsx"
+       end
+
+If your application uses i18n, you can specify the prefix for column labels as well
+
+       # GET posts/xslx
+       def xlsx	    
+         p = Post.to_xlsx :i18n => 'activerecord.attributes'
+         p.serialize('public/downloads/posts.xlsx')
+         send_file 'public/downloads/posts.xlsx', :type=>"application/xlsx"
+       end
+    
 For examples on how to use axlsx for custom styles, charts, images and more see:
+
         [http://rubygems.org/gems/axlsx] (https://rubygems.org/gems/axlsx)
 
 ###Documentation
@@ -85,6 +106,9 @@ This gem has 100% coverage using Test::Unit
  
 Changelog
 ---------
+- **December.3.11**: 1.0.2 release
+    Added support for chained method columns like :'model.association.attribute'
+
 - **October.30.11**: 1.0.1 release
   - Patch for inclusion error
 
