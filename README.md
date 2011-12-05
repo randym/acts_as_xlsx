@@ -7,9 +7,9 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.2 	   
+**Latest Version**: 1.0.3 	   
 **Ruby Version**: 1.8.7 - 1.9.3  
-**Release Date**: December 3rd 2011     
+**Release Date**: December 5th 2011     
 
 Synopsis
 --------
@@ -33,6 +33,8 @@ Feature List
 
 **7. Plays nicely with both ruby 1.8.7 + rails 2.3 as well as ruby 1.9.3 + rails 3
 
+**8. Automatically registers xlsx Mime type for use in respond_to web-service support.
+
 Installing
 ----------
 
@@ -44,6 +46,9 @@ Usage
 -----
 
 ###Examples
+
+Also see the writeups here: 
+http://axlsx.blogspot.com/
 
 A trivial rails example. In a production environment you will want to you stuff like x_sendfile and Tempfile  
 http://www.therailsway.com/2009/2/22/file-downloads-done-right  
@@ -106,6 +111,9 @@ This gem has 100% coverage using Test::Unit
  
 Changelog
 ---------
+- **December.5.11**: 1.0.3 release
+  - Added Mime type definition for rails.
+
 - **December.3.11**: 1.0.2 release
     Added support for chained method columns like :'model.association.attribute'
 
