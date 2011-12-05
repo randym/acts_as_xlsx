@@ -34,10 +34,13 @@ Gem::Specification.new do |s|
  
   # required for running tests
   s.add_development_dependency 'rake', "0.8.7" if RUBY_VERSION == "1.9.2"
-  s.add_development_dependency 'rake', "0.9.2.2" if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
+  s.add_development_dependency 'rake', "~> 0.9" if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'rdiscount'
+
+  s.required_ruby_version = '>= 1.8.7'
+  s.require_path = 'lib'
 
 end
