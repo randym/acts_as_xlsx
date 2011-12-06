@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'activerecord', '>= 2.3.9'
  
   # pinning rake to see if it solves some bundler exec rake problems with recursive includes
-  #s.add_development_dependency 'rake', "0.8.7" # if RUBY_VERSION == "1.9.2"
+  s.add_development_dependency 'rake', "0.8.7"  if RUBY_VERSION == "1.9.2"
   s.add_development_dependency 'rake', "~> 0.9"#  if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'sqlite3'
