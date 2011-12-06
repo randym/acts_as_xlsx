@@ -1,4 +1,7 @@
-require 'rake'
+# requiring rake here will cause a recursive require if the rake version is 0.9.2.2
+#require 'rake'
+
+
 require File.expand_path(File.dirname(__FILE__) + '/lib/acts_as_xlsx/version.rb')
 
 Gem::Specification.new do |s|
@@ -14,25 +17,24 @@ Gem::Specification.new do |s|
   s.description = <<-eof
     acts_as_xlsx lets you turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
   eof
-  # s.files 	= Dir.glob("{doc,lib,test,schema,examples}/**/*") + %w{ LICENSE README.md Rakefile CHANGELOG.md }
+  s.files 	= Dir.glob("{doc,lib,test,schema,examples}/**/*") + %w{ LICENSE README.md Rakefile CHANGELOG.md }
 
-  s.files = FileList.new('*', 'lib/**/*', 'doc/**/*', 'examples/**/*') do |fl|
-    fl.exclude("*.*~")
-    fl.exclude(".*")
-    fl.exclude("todo")
-    fl.exclude("*.gem")
-    fl.exclude("*.xlsx")
-  end
+  # s.files = FileList.new('*', 'lib/**/*', 'doc/**/*', 'examples/**/*') do |fl|
+  #   fl.exclude("*.*~")
+  #   fl.exclude(".*")
+  #   fl.exclude("todo")
+  #   fl.exclude("*.gem")
+  #   fl.exclude("*.xlsx")
+  # end
 
-  s.test_files = FileList.new('test/**/*') do |fl|
-      fl.exclude("*.*~")
-      fl.exclude("*.db")
-  end	       
+  #s.test_files = FileList.new('test/**/*') do |fl|
+  #    fl.exclude("*.*~")
+  #    fl.exclude("*.db")
+  #end	       
 
   s.add_runtime_dependency 'axlsx', '>= 1.0.10'
   s.add_runtime_dependency 'activerecord', '>= 2.3.9'
  
-  # pinning rake to see if it solves some bundler exec rake problems with recursive includes
   s.add_development_dependency 'rake', "0.8.7"  if RUBY_VERSION == "1.9.2"
   s.add_development_dependency 'rake', "~> 0.9"#  if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
   s.add_development_dependency 'bundler'
