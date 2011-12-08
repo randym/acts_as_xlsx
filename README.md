@@ -7,9 +7,9 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.3 	   
+**Latest Version**: 1.0.4 	   
 **Ruby Version**: 1.8.7 - 1.9.3  
-**Release Date**: December 5th 2011     
+**Release Date**: December 8th 2011     
 
 Synopsis
 --------
@@ -35,6 +35,8 @@ Feature List
 
 **8. Automatically registers xlsx Mime type for use in respond_to web-service support.
 
+**9. Allows you to specify the Axlsx package to add your data to so you can create a single workbook with a sheet for each to_xlsx call.
+
 Installing
 ----------
 
@@ -47,52 +49,10 @@ Usage
 
 ###Examples
 
-Also see the writeups here: 
-http://axlsx.blogspot.com/
+See the Guides here: 
 
-A trivial rails example. In a production environment you will want to you stuff like x_sendfile and Tempfile  
-http://www.therailsway.com/2009/2/22/file-downloads-done-right  
+[http://axlsx.blogspot.com/] (http://axlsx.blogspot.com/)
 
-for nginx  
-http://andrewtimberlake.com/blog/how-to-protect-downloads-but-still-have-nginx-serve-the-files   
-
-     #Add the gem to your Gemfile and bundle install
-       gem 'acts_as_xlsx'
-      
-     # app/models/post.rb
-       class Post < ActiveRecord::Base
-         acts_as_xlsx
-       end
-
-     # app/controllers/posts_controller.rb
-       class PostsController < ApplicationController
-         # GET posts/xlsx     
-         def xlsx
-           p = Post.to_xlsx
-           p.serialize('public/downloads/posts.xlsx')
-           send_file 'public/downloads/posts.xlsx', :type=>"application/xlsx"
-         end
-       end
-
-     # dont forget to add posts/xslx to your routes!
-
-In addition to dumping the entire table, it is also possible to specify the columns and method chains to execute in genrating your report.
-       # GET posts/xslx
-       def xlsx	    
-         p = Post.to_xlsx :columns => [:name, :title, :ranking, :'comments.last.content', :'comments.last.author.name']
-         p.serialize('public/downloads/posts.xlsx')
-         send_file 'public/downloads/posts.xlsx', :type=>"application/xlsx"
-       end
-
-If your application uses i18n, you can specify the prefix for column labels as well
-
-       # GET posts/xslx
-       def xlsx	    
-         p = Post.to_xlsx :i18n => 'activerecord.attributes'
-         p.serialize('public/downloads/posts.xlsx')
-         send_file 'public/downloads/posts.xlsx', :type=>"application/xlsx"
-       end
-    
 For examples on how to use axlsx for custom styles, charts, images and more see:
 
         [http://rubygems.org/gems/axlsx] (https://rubygems.org/gems/axlsx)
@@ -111,21 +71,11 @@ This gem has 100% coverage using Test::Unit
  
 Changelog
 ---------
-- **December.5.11**: 1.0.3 release
-  - Added Mime type definition for rails.
+- **December.7.11**: 1.0.4 release
+  - acts_as_xlsx now supports specifying the Axlsx package the export will be added to
+  - Support for custom named and I18n names for worksheets.
 
-- **December.3.11**: 1.0.2 release
-    Added support for chained method columns like :'model.association.attribute'
 
-- **October.30.11**: 1.0.1 release
-  - Patch for inclusion error
-
-- **October.30.11**: 1.0.0 release
-  - First release
-
-- **October.30.11**: 1.0.0a release
-  - First pre release
- 
 Please see the {file:CHANGELOG.md} document for past release information.
 
 

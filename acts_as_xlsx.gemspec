@@ -1,7 +1,3 @@
-# requiring rake here will cause a recursive require if the rake version is 0.9.2.2
-#require 'rake'
-
-
 require File.expand_path(File.dirname(__FILE__) + '/lib/acts_as_xlsx/version.rb')
 
 Gem::Specification.new do |s|
@@ -16,27 +12,16 @@ Gem::Specification.new do |s|
   s.has_rdoc    = 'acts_as_xlsx'
   s.description = <<-eof
     acts_as_xlsx lets you turn any ActiveRecord::Base inheriting class into an excel spreadsheet.
+    It can be added to any finder method or scope chain and can use localized column and sheet names with I18n.
   eof
-  s.files 	= Dir.glob("{doc,lib,test,schema,examples}/**/*") + %w{ LICENSE README.md Rakefile CHANGELOG.md }
+  s.files = Dir.glob("{lib/**/*}") + %w{ LICENSE README.md Rakefile CHANGELOG.md .yardopts }
+  s.test_files  = Dir.glob("{test/**/*}")
 
-  # s.files = FileList.new('*', 'lib/**/*', 'doc/**/*', 'examples/**/*') do |fl|
-  #   fl.exclude("*.*~")
-  #   fl.exclude(".*")
-  #   fl.exclude("todo")
-  #   fl.exclude("*.gem")
-  #   fl.exclude("*.xlsx")
-  # end
-
-  #s.test_files = FileList.new('test/**/*') do |fl|
-  #    fl.exclude("*.*~")
-  #    fl.exclude("*.db")
-  #end	       
-
-  s.add_runtime_dependency 'axlsx', '>= 1.0.10'
+  s.add_runtime_dependency 'axlsx', '>= 1.0.13'
   s.add_runtime_dependency 'activerecord', '>= 2.3.9'
  
-  s.add_development_dependency 'rake', "0.8.7"  if RUBY_VERSION == "1.9.2"
-  s.add_development_dependency 'rake', "~> 0.9"#  if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
+  s.add_development_dependency 'rake', "0.8.7" if RUBY_VERSION == "1.9.2"
+  s.add_development_dependency 'rake', "~> 0.9" if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'yard'

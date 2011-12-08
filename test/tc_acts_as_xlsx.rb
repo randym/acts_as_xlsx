@@ -19,6 +19,16 @@ class TestActsAsXlsx < Test::Unit::TestCase
 end
 
 class TestToXlsx < Test::Unit::TestCase
+  def test_to_xlsx_with_package
+    p = Post.to_xlsx
+    Post.to_xlsx :package=>p, :name=>'another posts'
+    assert_equal p.workbook.worksheets.size, 2
+  end
+
+  def test_to_xlsx_with_name
+    p = Post.to_xlsx :name=>'bob'
+    assert_equal(p.workbook.worksheets.first.name, 'bob')    
+  end
 
   def test_xlsx_columns
     assert_equal( Post.xlsx_columns, Post.column_names.map {|c| c.to_sym})

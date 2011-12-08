@@ -43,6 +43,7 @@ module Axlsx
       # @option options [Array, Symbol] types an array of Axlsx types for each cell in data rows or a single type that will be applied to all types.
       # @option options [Integer, Array] style The style to pass to Worksheet#add_row
       # @option options [String] i18n The path to i18n attributes. (usually activerecord.attributes)
+      # @option options [Package] package An Axlsx::Package. When this is provided the output will be added to the package as a new sheet.  # @option options [String] name This will be used to name the worksheet added to the package. If it is not provided the name of the table name will be humanized when i18n is not specified or the I18n.t for the table name.
       # @see Worksheet#add_row
       def to_xlsx(options = {})
 
@@ -53,16 +54,16 @@ module Axlsx
         i18n = options.delete(:i18n) || self.xlsx_i18n
         columns = options.delete(:columns) || self.xlsx_columns
 
-        p = Package.new
+        p = options.delete(:package) || Package.new
         row_style = p.workbook.styles.add_style(row_style) unless row_style.nil?
         header_style = p.workbook.styles.add_style(header_style) unless header_style.nil?
-
+        sheet_name = options.delete(:name) || (i18n ? I18n.t("#{i18n}.#{table_name.underscore}") : table_name.humanize) 
         data = [*find(:all, options)]
         data.compact!
         data.flatten!
 
         return p if data.empty?
-        p.workbook.add_worksheet(:name=>table_name.humanize) do |sheet|
+        p.workbook.add_worksheet(:name=>sheet_name) do |sheet|
           
           col_labels = if i18n
                          columns.map { |c| I18n.t("#{i18n}.#{self.name.underscore}.#{c}") }                         
