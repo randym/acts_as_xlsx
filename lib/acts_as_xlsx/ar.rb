@@ -57,6 +57,7 @@ module Axlsx
         p = options.delete(:package) || Package.new
         row_style = p.workbook.styles.add_style(row_style) unless row_style.nil?
         header_style = p.workbook.styles.add_style(header_style) unless header_style.nil?
+        i18n = self.xlsx_i18n == true ? 'activerecord.attributes' : i18n
         sheet_name = options.delete(:name) || (i18n ? I18n.t("#{i18n}.#{table_name.underscore}") : table_name.humanize) 
         data = [*find(:all, options)]
         data.compact!
