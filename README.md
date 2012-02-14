@@ -7,9 +7,9 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.4 	   
+**Latest Version**: 1.0.5 	   
 **Ruby Version**: 1.8.7 - 1.9.3  
-**Release Date**: December 8th 2011     
+**Release Date**: February 12th 2012     
 
 Synopsis
 --------
@@ -55,7 +55,7 @@ See the Guides here:
 
 For examples on how to use axlsx for custom styles, charts, images and more see:
 
-        [http://rubygems.org/gems/axlsx] (https://rubygems.org/gems/axlsx)
+[http://github.com/randym/axlsx](http://github.com/randym/axlsx)   
 
 ###Documentation
 
@@ -71,6 +71,9 @@ This gem has 100% coverage using Test::Unit
  
 Changelog
 ---------
+- **February.14.12**: 1.0.5 release
+  - acts_as_xlsx propery declares it's dependancy on i18n instead of relying on the parent gem.
+
 - **December.7.11**: 1.0.4 release
   - acts_as_xlsx now supports specifying the Axlsx package the export will be added to
   - Support for custom named and I18n names for worksheets.
