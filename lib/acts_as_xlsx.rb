@@ -5,5 +5,5 @@ begin
     Mime::Type.register "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", :xlsx
   end
 rescue NameError
-  puts "Mime module not defines. Skipping registration of xlsx"
+  puts "Mime module not defined. Skipping registration of xlsx"
 end

@@ -7,9 +7,9 @@ Acts as xlsx: Office Open XML Spreadsheet Generation plugin for active record
 **Author**:       Randy Morgan   
 **Copyright**:    2011      
 **License**:      MIT License      
-**Latest Version**: 1.0.5 	   
+**Latest Version**: 1.0.6	   
 **Ruby Version**: 1.8.7 - 1.9.3  
-**Release Date**: February 12th 2012     
+**Release Date**: July 27th 2012     
 
 Synopsis
 --------
@@ -71,6 +71,9 @@ This gem has 100% coverage using Test::Unit
  
 Changelog
 ---------
+- **July.27.12**: 1.0.6 release
+  - conditionaly register XLSX mime type
+
 - **February.14.12**: 1.0.5 release
   - acts_as_xlsx propery declares it's dependancy on i18n instead of relying on the parent gem.
 
