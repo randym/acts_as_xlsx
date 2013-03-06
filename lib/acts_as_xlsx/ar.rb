@@ -28,7 +28,7 @@ module Axlsx
       def acts_as_xlsx(options={})
         cattr_accessor :xlsx_i18n, :xlsx_columns
         self.xlsx_i18n = options.delete(:i18n) || false
-        self.xlsx_columns = options.delete(:columns) ||  self.column_names.map { |c| c = c.to_sym }
+        self.xlsx_columns = options.delete(:columns)
         extend Axlsx::Ar::SingletonMethods
       end
     end
@@ -46,6 +46,9 @@ module Axlsx
       # @option options [Package] package An Axlsx::Package. When this is provided the output will be added to the package as a new sheet.  # @option options [String] name This will be used to name the worksheet added to the package. If it is not provided the name of the table name will be humanized when i18n is not specified or the I18n.t for the table name.
       # @see Worksheet#add_row
       def to_xlsx(options = {})
+        if self.xlsx_columns.nil?
+          self.xlsx_columns = self.column_names.map { |c| c = c.to_sym }
+        end
 
         row_style = options.delete(:style)
         header_style = options.delete(:header_style) || row_style
