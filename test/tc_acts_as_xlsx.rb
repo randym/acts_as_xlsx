@@ -1,18 +1,10 @@
 #!/usr/bin/env ruby -w
 #
 require 'active_record'
-if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
-  require 'minitest/autorun'
-  T = MiniTest::Test
-else
-  require 'test/unit'
-  T = Test::Unit::TestCase
-end
-
-require "acts_as_xlsx.rb"
-
 puts "Using Ruby #{RUBY_VERSION}"
 puts "Testing against version #{ActiveRecord::VERSION::STRING}"
+
+require "acts_as_xlsx.rb"
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'helper'))
 

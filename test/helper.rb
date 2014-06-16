@@ -73,3 +73,11 @@ comments << Comment.new(:content => "Are you really the best post?", :post => po
 comments << Comment.new(:content => "Only until someone posts better!", :post => posts[1], :author=>authors[0])
 comments.each { |c| c.save }
 
+if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('4.0.0')
+  require 'minitest/autorun'
+  T = MiniTest::Test
+else
+  require 'test/unit'
+  T = Test::Unit::TestCase
+end
+
