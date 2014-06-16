@@ -46,7 +46,11 @@ class Post < ActiveRecord::Base
   acts_as_xlsx
   has_many :comments
   def ranking
-    a = Post.find(:all, :order =>"votes desc")
+    if Gem::Version.new(ActiveRecord::VERSION::STRING) > Gem::Version.new('2.3.8')
+      a = Post.order("votes desc")
+    else
+      a = Post.find(:all, :order =>"votes desc")
+    end
     a.index(self) + 1
   end
   def last_comment
@@ -68,5 +72,4 @@ comments << Comment.new(:post => posts[0], :content => "wow, that was a nice pos
 comments << Comment.new(:content => "Are you really the best post?", :post => posts[1], :author=>authors[0])
 comments << Comment.new(:content => "Only until someone posts better!", :post => posts[1], :author=>authors[0])
 comments.each { |c| c.save }
-
 

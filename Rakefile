@@ -21,4 +21,6 @@ task :release => :build do
   system "gem push acts_as_xlsx-#{Axlsx::Ar::VERSION}.gem"
 end
 
-task :default => :test
+if !ENV["APPRAISAL_INITIALIZED"] && !ENV["TRAVIS"]
+  task :default => :appraisal
+end

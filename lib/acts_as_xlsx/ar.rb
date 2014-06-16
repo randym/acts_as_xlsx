@@ -43,7 +43,9 @@ module Axlsx
       # @option options [Array, Symbol] types an array of Axlsx types for each cell in data rows or a single type that will be applied to all types.
       # @option options [Integer, Array] style The style to pass to Worksheet#add_row
       # @option options [String] i18n The path to i18n attributes. (usually activerecord.attributes)
-      # @option options [Package] package An Axlsx::Package. When this is provided the output will be added to the package as a new sheet.  # @option options [String] name This will be used to name the worksheet added to the package. If it is not provided the name of the table name will be humanized when i18n is not specified or the I18n.t for the table name.
+      # @option options [Package] package An Axlsx::Package. When this is provided the output will be added to the package as a new sheet.
+      # @option options [String] name This will be used to name the worksheet added to the package. If it is not provided the name of the table name will be humanized when i18n is not specified or the I18n.t for the table name.
+      # @option options [Boolean] skip_humanization When true, column names will be used 'as is' in the sheet header and sheet name when she sheet name is not specified.
       # @see Worksheet#add_row
       def to_xlsx(options = {})
         if self.xlsx_columns.nil?
@@ -61,13 +63,23 @@ module Axlsx
         row_style = p.workbook.styles.add_style(row_style) unless row_style.nil?
         header_style = p.workbook.styles.add_style(header_style) unless header_style.nil?
         i18n = self.xlsx_i18n == true ? 'activerecord.attributes' : i18n
-        sheet_name = options.delete(:name) || (i18n ? I18n.t("#{i18n}.#{table_name.underscore}") : table_name.humanize)
+        sheet_name = options.delete(:name)
+        skip_humanization = options.delete(:skip_humanization)
 
-        if Rails.version[0] >= '4'
-          data = options.delete(:data) || where(options[:where]).order(options[:order]).to_a
+        unless sheet_name
+          if i18n
+            sheet_name = I18n.t("#{i18n}.#{table_name.underscore}")
+          else
+            sheet_name = skip_humanization ? table_name : table_name.humanize
+          end
+        end
+
+        if Gem::Version.new(ActiveRecord::VERSION::STRING) > Gem::Version.new('2.3.8')
+          data = (options.delete(:data) || where(options[:where]).order(options[:order])).to_a
         else
           data = options.delete(:data) || [*find(:all, options)]
         end
+
         data.compact!
         data.flatten!
 
@@ -77,7 +89,9 @@ module Axlsx
           col_labels = if i18n
                          columns.map { |c| I18n.t("#{i18n}.#{self.name.underscore}.#{c}") }
                        else
-                         columns.map { |c| c.to_s.humanize }
+                         columns.map do |c|
+                           skip_humanization ? c..to_s : c.to_s.humanize
+                         end
                        end
 
           sheet.add_row col_labels, :style=>header_style

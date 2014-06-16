@@ -3,6 +3,8 @@ require 'minitest/autorun'
 require "acts_as_xlsx.rb"
 require 'active_record'
 
+puts "Testing against version #{ActiveRecord::VERSION::STRING}"
+
 require File.expand_path(File.join(File.dirname(__FILE__), 'helper'))
 
 class TestActsAsXlsx < MiniTest::Test
@@ -40,7 +42,7 @@ class TestToXlsx < MiniTest::Test
   end
 
   def test_to_xslx_with_provided_data
-    p = Post.to_xlsx :data => Post.where(:title => "This is the first post").all
+    p = Post.to_xlsx :data => Post.where(:title => "This is the first post")
     assert_equal("Id",p.workbook.worksheets.first.rows.first.cells.first.value)
     assert_equal(1,p.workbook.worksheets.first.rows.last.cells.first.value)
   end
