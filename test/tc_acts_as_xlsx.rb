@@ -1,13 +1,22 @@
 #!/usr/bin/env ruby -w
-require 'minitest/autorun'
-require "acts_as_xlsx.rb"
+#
 require 'active_record'
+if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
+  require 'minitest/autorun'
+  T = MiniTest::Test
+else
+  require 'test/unit'
+  T = Test::Unit::TestCase
+end
 
+require "acts_as_xlsx.rb"
+
+puts "Using Ruby #{RUBY_VERSION}"
 puts "Testing against version #{ActiveRecord::VERSION::STRING}"
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'helper'))
 
-class TestActsAsXlsx < MiniTest::Test
+class TestActsAsXlsx < T
 
   class Post < ActiveRecord::Base
     acts_as_xlsx :columns=>[:name, :title, :content, :votes, :ranking], :i18n => 'activerecord.attributes'
@@ -19,7 +28,7 @@ class TestActsAsXlsx < MiniTest::Test
   end
 end
 
-class TestToXlsx < MiniTest::Test
+class TestToXlsx < T
   def test_to_xlsx_with_package
     p = Post.to_xlsx
     Post.to_xlsx :package=>p, :name=>'another posts'
@@ -42,7 +51,13 @@ class TestToXlsx < MiniTest::Test
   end
 
   def test_to_xslx_with_provided_data
-    p = Post.to_xlsx :data => Post.where(:title => "This is the first post")
+
+    if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
+      data = Post.where(:title => "This is the first post")
+    else
+      data = Post.find(:all, conditions: {:title => "This is the first post"})
+    end
+    p = Post.to_xlsx :data => data
     assert_equal("Id",p.workbook.worksheets.first.rows.first.cells.first.value)
     assert_equal(1,p.workbook.worksheets.first.rows.last.cells.first.value)
   end

@@ -73,8 +73,7 @@ module Axlsx
             sheet_name = skip_humanization ? table_name : table_name.humanize
           end
         end
-
-        if Gem::Version.new(ActiveRecord::VERSION::STRING) > Gem::Version.new('2.3.8')
+        if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
           data = (options.delete(:data) || where(options[:where]).order(options[:order])).to_a
         else
           data = options.delete(:data) || [*find(:all, options)]

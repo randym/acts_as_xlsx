@@ -46,7 +46,7 @@ class Post < ActiveRecord::Base
   acts_as_xlsx
   has_many :comments
   def ranking
-    if Gem::Version.new(ActiveRecord::VERSION::STRING) > Gem::Version.new('2.3.8')
+    if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
       a = Post.order("votes desc")
     else
       a = Post.find(:all, :order =>"votes desc")

@@ -1,3 +1,4 @@
+gemfiles/*.lock
 Gemfile.lock
 .ruby-version
 acts_as_xlsx.sqlite3.db

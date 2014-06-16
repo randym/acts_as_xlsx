@@ -1,5 +1,5 @@
-appraise "2.1" do
-  gem "activerecord", "~> 2.1.0"
+appraise "2.3" do
+  gem "activerecord", "~> 2.3.8"
   gem "acts_as_xlsx", :path => "../"
 end
 

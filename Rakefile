@@ -8,7 +8,7 @@ task :gendoc do
   system "yardoc"
 end
 
-task :test do 
+task :test do
      require 'rake/testtask'
      Rake::TestTask.new do |t|
        t.libs << 'test'
