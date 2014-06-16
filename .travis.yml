@@ -5,5 +5,5 @@ rvm:
   - 1.9.3
 
 notifications:
-  irc: "irc.freenode.org#axlsx
+  irc: "irc.freenode.org#axlsx"
 
