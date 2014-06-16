@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.author	= "Randy Morgan"
   s.email       = 'digital.ipseity@gmail.com'
   s.homepage 	= 'https://github.com/randym/acts_as_xlsx'
-  s.platform    = Gem::Platform::RUBY       	     	  
+  s.platform    = Gem::Platform::RUBY
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = "ActiveRecord support for Axlsx"
   s.has_rdoc    = 'acts_as_xlsx'
@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'axlsx', '>= 1.0.13'
   s.add_runtime_dependency 'activerecord', '>= 2.3.9'
   s.add_runtime_dependency 'i18n', '>= 0.4.1'
-  
+
+  s.add_development_dependency 'rake', ">= 10.l3.2" if ["2.0.0"].include?(RUBY_VERSION)
   s.add_development_dependency 'rake', "0.8.7" if RUBY_VERSION == "1.9.2"
   s.add_development_dependency 'rake', "~> 0.9" if ["1.9.3", "1.8.7"].include?(RUBY_VERSION)
   s.add_development_dependency 'bundler'

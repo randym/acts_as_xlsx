@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby -w
-require 'test/unit'
+require 'minitest/autorun'
 require "acts_as_xlsx.rb"
 require 'active_record'
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'helper'))
 
-class TestActsAsXlsx < Test::Unit::TestCase
+class TestActsAsXlsx < MiniTest::Test
 
   class Post < ActiveRecord::Base
     acts_as_xlsx :columns=>[:name, :title, :content, :votes, :ranking], :i18n => 'activerecord.attributes'
@@ -15,10 +15,9 @@ class TestActsAsXlsx < Test::Unit::TestCase
     assert_equal([:name, :title, :content, :votes, :ranking], Post.xlsx_columns)
     assert_equal('activerecord.attributes', Post.xlsx_i18n)
   end
-
 end
 
-class TestToXlsx < Test::Unit::TestCase
+class TestToXlsx < MiniTest::Test
   def test_to_xlsx_with_package
     p = Post.to_xlsx
     Post.to_xlsx :package=>p, :name=>'another posts'
@@ -27,7 +26,7 @@ class TestToXlsx < Test::Unit::TestCase
 
   def test_to_xlsx_with_name
     p = Post.to_xlsx :name=>'bob'
-    assert_equal(p.workbook.worksheets.first.name, 'bob')    
+    assert_equal(p.workbook.worksheets.first.name, 'bob')
   end
 
   def test_xlsx_columns
@@ -39,14 +38,12 @@ class TestToXlsx < Test::Unit::TestCase
     assert_equal("Id",p.workbook.worksheets.first.rows.first.cells.first.value)
     assert_equal(2,p.workbook.worksheets.first.rows.last.cells.first.value)
   end
-  
-  
+
   def test_to_xslx_with_provided_data
     p = Post.to_xlsx :data => Post.where(:title => "This is the first post").all
     assert_equal("Id",p.workbook.worksheets.first.rows.first.cells.first.value)
     assert_equal(1,p.workbook.worksheets.first.rows.last.cells.first.value)
   end
-  
 
   def test_columns
     p = Post.to_xlsx :columns => [:name, :title, :content, :votes]
@@ -69,9 +66,4 @@ class TestToXlsx < Test::Unit::TestCase
     assert_equal("Name", sheet.rows.first.cells.first.value)
     assert_equal(Post.last.comments.last.author.name, sheet.rows.last.cells.last.value)
   end
-
-  
-  
 end
-
-

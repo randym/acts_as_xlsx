@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-# Axlsx is a gem or generating excel spreadsheets with charts, images and many other features. 
-# 
+# Axlsx is a gem or generating excel spreadsheets with charts, images and many other features.
+#
 # acts_as_xlsx provides integration into active_record for Axlsx.
-# 
+#
 require 'axlsx'
 
-# Adding to the Axlsx module 
+# Adding to the Axlsx module
 # @see http://github.com/randym/axlsx
 module Axlsx
   # === Overview
   # This module defines the acts_as_xlsx class method and provides to_xlsx support to both AR classes and instances
   module Ar
-    
+
     def self.included(base) # :nodoc:
       base.send :extend, ClassMethods
     end
-    
+
     # Class methods for the mixin
     module ClassMethods
 
@@ -61,28 +61,28 @@ module Axlsx
         row_style = p.workbook.styles.add_style(row_style) unless row_style.nil?
         header_style = p.workbook.styles.add_style(header_style) unless header_style.nil?
         i18n = self.xlsx_i18n == true ? 'activerecord.attributes' : i18n
-        sheet_name = options.delete(:name) || (i18n ? I18n.t("#{i18n}.#{table_name.underscore}") : table_name.humanize) 
+        sheet_name = options.delete(:name) || (i18n ? I18n.t("#{i18n}.#{table_name.underscore}") : table_name.humanize)
         data = options.delete(:data) || [*find(:all, options)]
         data.compact!
         data.flatten!
 
         return p if data.empty?
         p.workbook.add_worksheet(:name=>sheet_name) do |sheet|
-          
+
           col_labels = if i18n
-                         columns.map { |c| I18n.t("#{i18n}.#{self.name.underscore}.#{c}") }                         
+                         columns.map { |c| I18n.t("#{i18n}.#{self.name.underscore}.#{c}") }
                        else
                          columns.map { |c| c.to_s.humanize }
                        end
-          
+
           sheet.add_row col_labels, :style=>header_style
-          
+
           data.each do |r|
             row_data = columns.map do |c|
               if c.to_s =~ /\./
                 v = r; c.to_s.split('.').each { |method| v = v.send(method) }; v
               else
-                r.send(c)                
+                r.send(c)
               end
             end
             sheet.add_row row_data, :style=>row_style, :types=>types
@@ -96,5 +96,3 @@ end
 
 require 'active_record'
 ActiveRecord::Base.send :include, Axlsx::Ar
-
-
