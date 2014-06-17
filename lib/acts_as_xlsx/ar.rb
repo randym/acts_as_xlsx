@@ -37,7 +37,8 @@ module Axlsx
     module SingletonMethods
 
       # Maps the AR class to an Axlsx package
-      # options are passed into AR find
+      # If you are using AR 3.0 or higher, where and order options are used when retrieving models.
+      # If you are on an earlier version, any option not listed here is passed into find(:all, options).
       # @param [Array, Array] columns as an array of symbols or a symbol that defines the attributes or methods to render in the sheet.
       # @option options [Integer] header_style to apply to the first row of field names
       # @option options [Array, Symbol] types an array of Axlsx types for each cell in data rows or a single type that will be applied to all types.

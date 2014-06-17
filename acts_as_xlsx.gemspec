@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files  = Dir.glob("{test/**/*}")
 
   s.add_runtime_dependency 'axlsx', '>= 1.0.13'
-  s.add_runtime_dependency 'activerecord', '>= 2.1.0'
+  s.add_runtime_dependency 'activerecord', '>= 2.3.8'
   s.add_runtime_dependency 'i18n', '>= 0.4.1'
 
   s.add_development_dependency('appraisal')
