@@ -11,9 +11,9 @@ gemfile:
 matrix:
   exclude:
     - rvm: 2.0.0
-      gemfile: gemfiles/2.3.0.gemfile
+      gemfile: gemfiles/2.3.gemfile
     - rvm: 2.1.1
-      gemfile: gemfiles/2.3.0.gemfile
+      gemfile: gemfiles/2.3.gemfile
 
 
 script: "bundle exec rake test"
