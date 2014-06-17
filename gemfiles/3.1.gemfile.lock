@@ -52,6 +52,7 @@ DEPENDENCIES
   acts_as_xlsx!
   appraisal
   bundler
+  rake
   rdiscount
   sqlite3 (~> 1.3.5)
   yard

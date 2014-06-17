@@ -1,3 +1,4 @@
+# must exclude Ruby over 1.9.3
 appraise "2.3" do
   gem "activerecord", "~> 2.3.8"
   gem "acts_as_xlsx", :path => "../"

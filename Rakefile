@@ -1,12 +1,11 @@
 require "bundler/setup"
 require 'appraisal'
-require 'bundler/gem_tasks'
 require File.expand_path(File.dirname(__FILE__) + '/lib/acts_as_xlsx/version.rb')
 task :build => :gendoc do
   system "gem build acts_as_xlsx.gemspec"
 end
 
-task :gendoc do   
+task :gendoc do
   system "yardoc"
 end
 
@@ -23,7 +22,6 @@ task :release => :build do
   system "gem push acts_as_xlsx-#{Axlsx::Ar::VERSION}.gem"
 end
 
-task :default => :test
 if !ENV["APPRAISAL_INITIALIZED"] && !ENV["TRAVIS"]
   task :default => :appraisal
 end

@@ -22,17 +22,12 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'activerecord', '>= 2.1.0'
   s.add_runtime_dependency 'i18n', '>= 0.4.1'
 
-  if RUBY_VERSION == "2.0.0"
-    s.add_development_dependency 'rake'
-    s.add_development_dependency 'minitest'
-  end
   s.add_development_dependency('appraisal')
-
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'sqlite3', "~> 1.3.5"
   s.add_development_dependency 'yard'
   s.add_development_dependency 'rdiscount'
-  s.add_development_dependency 'yard'
-  s.required_ruby_version = '>= 1.8.7'
+  s.required_ruby_version = '>= 1.9.3'
   s.require_path = 'lib'
 end
