@@ -107,7 +107,7 @@ module Axlsx
             records = [*where(options.delete(:where)).order(options.delete(:order))]
           else
             find_options = options.select do |key, value|
-              %w(conditions order group limit offset joins include select from readonly lock).include(key.to_s)
+              %w(conditions order group limit offset joins include select from readonly lock).include?(key.to_s)
             end
             records = [*find(:all, find_options)]
           end
