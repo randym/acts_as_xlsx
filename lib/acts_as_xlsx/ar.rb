@@ -21,10 +21,10 @@ module Axlsx
 
       # defines the class method to inject to_xlsx
       # @option options [Array, Symbol] columns an array of symbols defining the columns and methods to call in generating sheet data for each row.
-      # @option options [String] i18n (default nil) The path to search for localization. When this is specified your i18n.t will be used to determine the labels for columns.
+      # @option options [String, Boolean] i18n (default nil) The path to search for localization. When this is specified your i18n.t will be used to determine the labels for columns. If this option is set to true, the default activerecord.attributes scope is always applied, regardless of what is passed in to to_xlsx.
       # @example
       #       class MyModel < ActiveRecord::Base
-      #          acts_as_xlsx :columns=> [:id, :created_at, :updated_at], :i18n => 'activerecord.attributes'
+      #          acts_as_xlsx columns: [:id, :created_at, :updated_at], i18n: 'activerecord.attributes'
       def acts_as_xlsx(options={})
         cattr_accessor :xlsx_i18n, :xlsx_columns
         self.xlsx_i18n = options.delete(:i18n) || false
@@ -53,61 +53,74 @@ module Axlsx
           self.xlsx_columns = self.column_names.map { |c| c = c.to_sym }
         end
 
-        row_style = options.delete(:style)
-        header_style = options.delete(:header_style) || row_style
-        types = [options.delete(:types) || []].flatten
+        package = options[:package] || Package.new
+        write_options = options.clone.merge(xlsx_style(package, options))
+        sheet_name = options[:name] || xlsx_label_for(table_name, xlsx_i18n, options[:skip_humanization])
 
-        i18n = options.delete(:i18n) || self.xlsx_i18n
-        columns = options.delete(:columns) || self.xlsx_columns
-
-        p = options.delete(:package) || Package.new
-        row_style = p.workbook.styles.add_style(row_style) unless row_style.nil?
-        header_style = p.workbook.styles.add_style(header_style) unless header_style.nil?
-        i18n = self.xlsx_i18n == true ? 'activerecord.attributes' : i18n
-        sheet_name = options.delete(:name)
-        skip_humanization = options.delete(:skip_humanization)
-
-        unless sheet_name
-          if i18n
-            sheet_name = I18n.t("#{i18n}.#{table_name.underscore}")
-          else
-            sheet_name = skip_humanization ? table_name : table_name.humanize
-          end
-        end
-        if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
-          data = (options.delete(:data) || where(options[:where]).order(options[:order])).to_a
-        else
-          data = options.delete(:data) || [*find(:all, options)]
+        package.workbook.add_worksheet(name: sheet_name) do |sheet|
+          xlsx_write_header sheet, write_options
+          xlsx_write_body sheet, write_options
         end
 
-        data.compact!
-        data.flatten!
+        package
+      end
 
-        return p if data.empty?
-        p.workbook.add_worksheet(:name=>sheet_name) do |sheet|
+      private
 
-          col_labels = if i18n
-                         columns.map { |c| I18n.t("#{i18n}.#{self.name.underscore}.#{c}") }
-                       else
-                         columns.map do |c|
-                           skip_humanization ? c..to_s : c.to_s.humanize
-                         end
-                       end
+      def xlsx_i18n
+        self.xlsx_i18n == true ? 'activerecord.attributes' : options.delete(:i18n) || self.xlsx_i18n
+      end
 
-          sheet.add_row col_labels, :style=>header_style
+      def xlsx_style(package, options)
+        row_style = package.workbook.styles.add_style(options[:style]) if options[:style]
+        header_style = package.workbook.styles.add_style(options[:header_style]) if options[:header_style]
+        {header_style: header_style, row_style: row_style}
+      end
 
-          data.each do |r|
-            row_data = columns.map do |c|
-              if c.to_s =~ /\./
-                v = r; c.to_s.split('.').each { |method| v = v.send(method) }; v
-              else
-                r.send(c)
-              end
+      def xlsx_write_header(sheet, options={})
+        namespace = xlsx_i18n ? "#{xlsx_i18n}.#{self.name.underscore}" : false
+        columns = options[:columns] || self.xlsx_columns
+        column_labels = columns.map do |column|
+          xlsx_label_for(column, namespace, options[:skip_humanization])
+        end
+        sheet.add_row column_labels, :style => options[:header_style]
+      end
+
+      def xlsx_write_body(sheet, options={})
+        columns = options[:columns] || self.xlsx_columns
+        method_chains = columns.map { |column| column.to_s.split('.') }
+        types = [*options[:types]]
+        xlsx_records(options).map do |record|
+          row_data = method_chains.map do |chain|
+            chain.reduce(record) do |receiver, method|
+              receiver.send(method)
             end
-            sheet.add_row row_data, :style=>row_style, :types=>types
+          end
+          sheet.add_row row_data, style: options[:row_style], types: types
+        end
+      end
+
+      def xlsx_records(options={})
+        records = [*options.delete(:data)]
+        if records.empty?
+          if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
+            records = [*where(options.delete(:where)).order(options.delete(:order))]
+          else
+            find_options = options.select do |key, value|
+              %w(conditions order group limit offset joins include select from readonly lock).include(key.to_s)
+            end
+            records = [*find(:all, find_options)]
           end
         end
-        p
+        records.compact.flatten
+      end
+
+      def xlsx_label_for(key, namespace, skip_humanization)
+       if namespace
+         I18n.t("#{namespace}.#{key}")
+       else
+         skip_humanization ? key.to_s : key.to_s.humanize
+       end
       end
     end
   end

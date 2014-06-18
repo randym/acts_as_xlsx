@@ -43,13 +43,11 @@ class TestToXlsx < T
   end
 
   def test_to_xslx_with_provided_data
-
     if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('3.0.0')
-      data = Post.where(:title => "This is the first post")
+      p = Post.to_xlsx where: {title: "This is the first post"}
     else
-      data = Post.find(:all, conditions: {:title => "This is the first post"})
+      p = Post.to_xlsx conditions: {title: "This is the first post"}
     end
-    p = Post.to_xlsx :data => data
     assert_equal("Id",p.workbook.worksheets.first.rows.first.cells.first.value)
     assert_equal(1,p.workbook.worksheets.first.rows.last.cells.first.value)
   end
@@ -69,6 +67,12 @@ class TestToXlsx < T
     assert_equal(Post.last.ranking, sheet.rows.last.cells.last.value)
   end
 
+  def test_dehumanization
+    p = Post.to_xlsx :columns=>[:name, :votes, :content, :ranking], skip_humanization: true
+    sheet = p.workbook.worksheets.first
+    assert_equal(sheet.rows.first.cells.size, Post.xlsx_columns.size - 3)
+    assert_equal("name",sheet.rows.first.cells.first.value)
+  end
   def test_chained_method
     p = Post.to_xlsx :columns=>[:name, :votes, :content, :ranking, :'comments.last.content', :'comments.first.author.name']
     sheet = p.workbook.worksheets.first
